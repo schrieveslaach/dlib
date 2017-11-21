@@ -1,0 +1,22 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(android-example CXX)
+
+INCLUDE(dlib/cmake)
+
+INCLUDE_DIRECTORIES(
+    "${CMAKE_CURRENT_SOURCE_DIR}/dlib/"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main/include"
+)
+
+ADD_LIBRARY(localizer SHARED
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main/native-lib.cpp")
+TARGET_LINK_LIBRARIES(android-example dlib::dlib)
+
+SET(OUTPUT_TARGET_DIRECTORY "/tmp")
+
+SET_TARGET_PROPERTIES (
+    localizer
+    PROPERTIES
+        LINKER_LANGUAGE CXX
+        LIBRARY_OUTPUT_DIRECTORY "${OUTPUT_TARGET_DIRECTORY}"
+)
